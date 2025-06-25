@@ -1,1 +1,15 @@
+INSERT INTO Company (id, name, age, occupation) VALUES
+(1, 'Praveen', 20, 'Business Man'),
+(2, 'Raman', 21, 'Sole Proprietor'),
+(3, 'Arpit', 25, 'Business Man'),
+(4, 'Mohit', 26, 'Corporate');
 
+#Update
+UPDATE Company
+SET name = 'Ravi'
+WHERE name = 'Mohit';
+
+#Delete
+DELETE FROM Company
+WHERE id = 3;
+ 
