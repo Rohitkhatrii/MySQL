@@ -22,9 +22,11 @@ SELECT * FROM Company WHERE gender = 'F' AND age = 21;
 
 SELECT * FROM Company WHERE age = 21 OR age = 25;
 
+Select * from company WHERE name LIKE 'P%';
+
 SELECT * FROM Company WHERE age BETWEEN 20 AND 26;
 
-#These queries filter records using conditions like equality, multiple conditions (AND, OR), and ranges (BETWEEN).
+#These queries filter records using WHERE, AND, OR, LIKE, BETWEEN.
 
 3. ORDER BY
 
