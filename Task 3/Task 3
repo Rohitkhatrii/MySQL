@@ -1,1 +1,16 @@
+#Use SELECT * and specific columns
+Select * from Company;
+Select id from Company;
+Select name from Company;
+Select age from Company;
+Select Gender from Company;
+Select occupation from Company;
 
+#Apply WHERE, AND, OR, LIKE, BETWEEN
+Select id from company where Gender = 'M';
+Select * from Company where Gender = 'F' AND age = 21;
+Select * from Company where age = 21 OR age = 25;
+Select * from Company where age BETWEEN 20 AND 26;
+
+#Sort with ORDER BY
+Select name from Company order by Salary;
