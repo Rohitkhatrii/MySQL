@@ -1,1 +1,16 @@
+#Apply aggregate functions on numeric columns
 
+#SUM
+select SUM(Salary) from Company;
+
+#COUNT
+Select occupation, count(occupation) as 'Total Occupations' from company GROUP BY occupation;
+
+#AVG
+Select ROUND(avg(age)) from Company;
+
+#Use GROUP BY to categorize
+Select name,AVG(Salary) from company GROUP BY name;
+
+#Filter groups using HAVING
+Select name,avg(salary) from company GROUP BY age,name HAVING age < 27;
