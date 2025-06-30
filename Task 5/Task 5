@@ -1,0 +1,72 @@
+# Creating Tables ( Customers & Orders )
+create table Customers
+(
+ customer_id int not null,
+ name varchar(20) not null,
+ age int not null,
+ address varchar(100) not null
+);
+
+create table Orders
+(
+ order_id int not null,
+ customer_id int not null,
+ amount decimal(10,2) not null
+);
+
+#Inserting values
+
+Insert into Customers (customer_id, name , age , address) Values
+(101,'Rajat',20,'Patrakar'),
+(102,'Aman',21,'Sanganer'),
+(103,'Kuldeep',25,'Mansarovar'),
+(104,'Lalit',26,'Vaishali'),
+(105,'Raj',26,'Civil Lines'),
+(106,'Dilip',20,'Sumer Nagar'),
+(107,'Deepak',21,'Renwal'),
+(108,'Jay',25,'Pratap Nagar'),
+(109,'Pulkit',26,'Vatika'),
+(110,'Shaurya',26,'Bani Park');
+
+Insert into Orders (order_id, customer_id, amount) Values
+(1,101,10264.23),
+(2,102,10500),
+(3,103,20000),
+(4,104,50000),
+(5,105,2000),
+(6,106,2500),
+(7,107,3500),
+(8,111,1500),
+(9,102,500),
+(10,101,206.99);
+
+# INNER JOIN
+Select Customers.customer_id,Customers.name,Customers.age,Orders.order_id
+from Customers
+INNER JOIN Orders
+ON Customers.customer_id=Orders.customer_id;
+
+# Left JOIN
+Select Customers.customer_id,Customers.name,Customers.age,Orders.order_id
+from Customers
+LEFT JOIN Orders
+ON Customers.customer_id=Orders.customer_id;
+
+# Right JOIN
+Select Customers.customer_id,Customers.name,Customers.age,Orders.order_id
+from Customers
+RIGHT JOIN Orders
+ON Customers.customer_id=Orders.customer_id;
+
+# FULL JOIN
+Select Customers.customer_id,Customers.name,Customers.age,Orders.order_id
+from Customers
+LEFT JOIN Orders
+ON Customers.customer_id=Orders.customer_id
+
+UNION
+
+Select Customers.customer_id,Customers.name,Customers.age,Orders.order_id
+from Customers
+RIGHT JOIN Orders
+ON Customers.customer_id=Orders.customer_id;
