@@ -1,0 +1,39 @@
+# Use scalar subqueries
+SELECT name, age
+FROM Company
+WHERE age > (SELECT AVG(age) FROM Customers);
+
+# Use correlated subqueries
+SELECT name , Gender, Salary
+FROM Company
+WHERE salary > (
+  SELECT AVG(salary)
+  FROM Company
+  WHERE Gender = Company.Gender
+);
+
+# Use subqueries inside IN, EXISTS, =
+
+SELECT name
+FROM Customers
+WHERE customer_id IN (
+SELECT customer_id
+FROM Orders
+where amount > 9000);
+
+# Exists
+SELECT name
+FROM Customers
+WHERE EXISTS (
+  SELECT *
+  FROM Orders
+  WHERE Orders.customer_id=Orders.customer_id
+);
+
+# =
+SELECT name, address
+FROM Customers
+WHERE age = (
+  SELECT MAX(age)
+  FROM Customers
+);
