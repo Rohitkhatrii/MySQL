@@ -1,0 +1,1 @@
+Created views to simplify queries and hide sensitive data. Made a user (rohitkhatri), granted access only to a specific view (Public_Information), and controlled permissions using GRANT and REVOKE. Used SQL SECURITY INVOKER to enforce user-level access.
