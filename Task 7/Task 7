@@ -1,0 +1,41 @@
+1.Use CREATE VIEW with complex SELECT
+
+#Use CREATE VIEW with complex SELECT
+
+CREATE VIEW CustomerOrderSummary AS
+SELECT
+  c.customer_id,
+  c.name,
+  c.address,
+  COUNT(o.order_id) AS total_orders,
+  SUM(o.amount) AS total_amount
+FROM
+  Customers c
+JOIN
+  Orders o ON c.customer_id = o.customer_id
+GROUP BY
+  c.customer_id, c.name, c.address;
+
+2.Use views for abstraction and security
+
+# Use views for abstraction and security
+# abstraction means to access 
+# For security we are using granting of Access 
+
+Create 
+SQL SECURITY INVOKER 
+View Public_Information
+AS Select id,name,occupation
+from Company;
+
+# We create a user first then we can grant access
+CREATE USER 'rohitkhatri'@'localhost' IDENTIFIED BY 'rohitkhatri';
+
+# Granting access
+GRANT SELECT ON rohit1.Public_Information TO 'rohitkhatri'@'localhost';
+
+# To show grants
+SHOW GRANTS FOR 'rohitkhatri'@'localhost';
+
+# TO remove the privleges
+REVOKE ALL PRIVILEGES ON rohit1.* FROM 'rohitkhatri'@'localhost';
