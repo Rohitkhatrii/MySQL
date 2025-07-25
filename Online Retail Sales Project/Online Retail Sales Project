@@ -1,0 +1,178 @@
+-------1. Online Retail Sales Database Design------
+
+Objective: Design a normalized SQL schema for an e-commerce platform.
+Tools: MySQL / PostgreSQL, dbdiagram.io
+
+Deliverables: ER diagram, SQL schema, sample data, query report.
+
+
+------------------------------------------
+
+# Creating the Tables
+
+CREATE TABLE customers (
+  customer_id INT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  phone VARCHAR(15),
+  address TEXT
+);
+
+CREATE TABLE products (
+  product_id INT PRIMARY KEY,
+  name VARCHAR(100),
+  description TEXT,
+  price DECIMAL(10,2),
+  stock_quantity INT,
+  category VARCHAR(50)
+);
+
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  customer_id INT,
+  order_date DATE,
+  status VARCHAR(20),
+  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE order_items (
+  order_item_id INT PRIMARY KEY,
+  order_id INT,
+  product_id INT,
+  quantity INT,
+  price_at_order_time DECIMAL(10,2),
+  FOREIGN KEY (order_id) REFERENCES orders(order_id),
+  FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE payments (
+  payment_id INT PRIMARY KEY,
+  order_id INT,
+  payment_method VARCHAR(50),
+  amount DECIMAL(10,2),
+  payment_date DATE,
+  FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+# Inserting the sample data
+
+#Customers Table
+INSERT INTO customers VALUES (1, 'Kriti Sharma', 'Kritisharma01@yahoo.com', '7014558855', '20 Varun Path Mansarovar, Jaipur');
+INSERT INTO customers VALUES (2, 'Varun Dutt', 'Varundutt@gmail.com', '4646451646', '30 Vaishali Nagar, Jaipur');
+INSERT INTO customers VALUES (3, 'Shilpa Kumar', 'Shilpakumar12@yahoo.com', '4579645798', 'Flat no. 201, Woodland Society, Mansarovar, Jaipur');
+INSERT INTO customers VALUES (4, 'Naman Jadeja', 'NamanJadeja@gmail.com', '2154215421', 'Flat no. 301, KarunaKaran Society, Bhopal');
+INSERT INTO customers VALUES (5, 'Ravi Dubey', 'Ravidubey@yahoo.com', '7014778899', 'Plot no. 2, Vidyapeeth Nagar, Ajmer');
+INSERT INTO customers VALUES (6, 'Shailesh Meena', 'Shaileshmeena@hotmail.com', '9876549764', 'Ajay Nagar, Ajmer');
+INSERT INTO customers VALUES (7, 'Karan Sachdeva', 'Karansachdeva@hotmail.com', '9854545454', 'Shastri Nagar, Jaipur');
+INSERT INTO customers VALUES (8, 'Ananya Kaushik', 'Ananyakaushik@hotmail.com', '7014552222', 'Bani Park, Jaipur');
+
+# Products Table
+INSERT INTO products VALUES (1, 'ToothBrush', 'Keeps Teeth Forever Clean', 593.79, 13, 'Hygiene');
+INSERT INTO products VALUES (2, 'Cream', 'Good Moisturing Cream', 695.04, 66, 'Face Hygiene');
+INSERT INTO products VALUES (3, 'Wrench Tool', 'Best Quality', 183.24, 34, 'Tools');
+INSERT INTO products VALUES (4, 'Mobile', 'New Flagship Phone', 842.61, 94, 'Smartphone');
+INSERT INTO products VALUES (5, 'Keyboard', 'Mechanical Keyboard', 783.37, 91, 'Computer Part');
+INSERT INTO products VALUES (6, 'Monitor', 'OLED Display', 176.58, 45, 'Computer Part');
+INSERT INTO products VALUES (7, 'Extension Board', 'Super Quality', 261.42, 25, 'Home Item');
+INSERT INTO products VALUES (8, 'Headphone', 'supports spatial audio', 438.50, 56, 'Wearable');
+INSERT INTO products VALUES (9, 'Book', 'The Two Thrones', 233.91, 30, 'Reading');
+INSERT INTO products VALUES (10, 'CarryBag', 'Jute Bag', 342.80, 43, 'Home Essentials');
+INSERT INTO products VALUES (11, 'Table', 'Best Wooden material', 736.64, 21, 'Home Item');
+INSERT INTO products VALUES (12, 'Towel', 'Nice fabric', 159.95, 62, 'Cloth');
+
+# Orders Table
+INSERT INTO orders VALUES (1, 1, '2025-06-25', 'Shipped');
+INSERT INTO orders VALUES (2, 2, '2025-06-09', 'Cancelled');
+INSERT INTO orders VALUES (3, 6, '2025-07-13', 'Delivered');
+INSERT INTO orders VALUES (4, 5, '2025-06-17', 'Pending');
+INSERT INTO orders VALUES (5, 4, '2025-07-09', 'Cancelled');
+INSERT INTO orders VALUES (6, 4, '2025-06-08', 'Delivered');
+INSERT INTO orders VALUES (7, 8, '2025-06-15', 'Delivered');
+INSERT INTO orders VALUES (8, 5, '2025-06-20', 'Pending');
+INSERT INTO orders VALUES (9, 2, '2025-07-02', 'Shipped');
+INSERT INTO orders VALUES (10, 2, '2025-07-06', 'Delivered');
+INSERT INTO orders VALUES (11, 6, '2025-06-28', 'Pending');
+INSERT INTO orders VALUES (12, 2, '2025-06-14', 'Shipped');
+INSERT INTO orders VALUES (13, 7, '2025-06-19', 'Pending');
+INSERT INTO orders VALUES (14, 3, '2025-07-11', 'Delivered');
+INSERT INTO orders VALUES (15, 6, '2025-06-11', 'Cancelled');
+
+# Order_items Table
+INSERT INTO order_items VALUES (1, 1, 9, 5);
+INSERT INTO order_items VALUES (2, 1, 8, 4);
+INSERT INTO order_items VALUES (3, 2, 4, 5);
+INSERT INTO order_items VALUES (4, 2, 7, 4);
+INSERT INTO order_items VALUES (5, 3, 11, 5);
+INSERT INTO order_items VALUES (6, 3, 5, 3);
+INSERT INTO order_items VALUES (7, 4, 4, 4);
+INSERT INTO order_items VALUES (8, 4, 10, 4);
+INSERT INTO order_items VALUES (9, 5, 10, 2);
+INSERT INTO order_items VALUES (10, 5, 5, 2);
+INSERT INTO order_items VALUES (11, 6, 8, 5);
+INSERT INTO order_items VALUES (12, 6, 11, 3);
+INSERT INTO order_items VALUES (13, 7, 4, 1);
+INSERT INTO order_items VALUES (14, 7, 7, 1);
+INSERT INTO order_items VALUES (15, 8, 9, 1);
+INSERT INTO order_items VALUES (16, 8, 8, 3);
+INSERT INTO order_items VALUES (17, 9, 6, 1);
+INSERT INTO order_items VALUES (18, 9, 3, 5);
+INSERT INTO order_items VALUES (19, 10, 4, 5);
+INSERT INTO order_items VALUES (20, 10, 3, 4);
+INSERT INTO order_items VALUES (21, 11, 5, 5);
+INSERT INTO order_items VALUES (22, 11, 2, 4);
+INSERT INTO order_items VALUES (23, 12, 3, 3);
+INSERT INTO order_items VALUES (24, 12, 12, 3);
+INSERT INTO order_items VALUES (25, 13, 3, 1);
+INSERT INTO order_items VALUES (26, 13, 11, 2);
+INSERT INTO order_items VALUES (27, 14, 1, 4);
+INSERT INTO order_items VALUES (28, 14, 2, 4);
+INSERT INTO order_items VALUES (29, 15, 11, 2);
+INSERT INTO order_items VALUES (30, 15, 9, 4);
+
+# Payments Table
+INSERT INTO payments VALUES (1, 1, 'PayTM', 672.41, '2025-06-25');
+INSERT INTO payments VALUES (2, 2, 'Credit Card', 1104.03, '2025-06-09');
+INSERT INTO payments VALUES (3, 3, 'Credit Card', 1520.01, '2025-07-13');
+INSERT INTO payments VALUES (4, 4, 'COD', 1185.41, '2025-06-19');
+INSERT INTO payments VALUES (5, 5, 'Phonepe', 1126.17, '2025-07-09');
+INSERT INTO payments VALUES (6, 6, 'Net Banking', 1175.14, '2025-06-08');
+INSERT INTO payments VALUES (7, 7, 'Net Banking', 1104.03, '2025-06-15');
+INSERT INTO payments VALUES (8, 8, 'Gpay', 672.41, '2025-06-20');
+INSERT INTO payments VALUES (9, 9, 'PayTM', 359.82, '2025-07-02');
+INSERT INTO payments VALUES (10, 10, 'PayTM', 1025.85, '2025-07-06');
+INSERT INTO payments VALUES (11, 11, 'Credit Card', 1478.41, '2025-06-28');
+INSERT INTO payments VALUES (12, 12, 'PayPal', 343.19, '2025-06-14');
+INSERT INTO payments VALUES (13, 13, 'Gpay', 919.88, '2025-06-19');
+INSERT INTO payments VALUES (14, 14, 'Credit Card', 1288.83, '2025-07-11');
+INSERT INTO payments VALUES (15, 15, 'Phonepe', 970.55, '2025-06-11');
+
+#JOIN queries for Sales Report
+
+SELECT
+  o.order_id,
+  c.name AS customer_name,
+  GROUP_CONCAT(p.name SEPARATOR ', ') AS products,
+  pay.payment_method,
+  MAX(pay.amount) AS Total_amount,
+  o.order_date
+FROM orders o
+INNER JOIN customers c ON o.customer_id = c.customer_id
+INNER JOIN order_items oi ON o.order_id = oi.order_id
+INNER JOIN products p ON oi.product_id = p.product_id
+INNER JOIN payments pay ON o.order_id = pay.order_id
+GROUP BY o.order_id, c.name, pay.payment_method, o.order_date;
+
+# Views for Sales Reports
+
+CREATE VIEW product_sales_summary AS
+SELECT
+  p.product_id,
+  p.name,
+  SUM(oi.quantity) AS total_units_sold
+FROM products p
+JOIN order_items oi ON p.product_id = oi.product_id
+GROUP BY p.product_id, p.name;
+
+
+
+
